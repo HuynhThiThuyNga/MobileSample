@@ -17,16 +17,14 @@
 ## (Comments)
 #Sample Feature Definition Template
 @Android
-Feature: Title of your feature
+Feature: Caculate 
   I want to use this template for my feature file
 
   @test
   Scenario: Title of your scenario
-    Given Init configuration
-    #And some other precondition
-    #When I complete action
-    #And some other action
-    #And yet another action
-    #Then I validate the outcomes
-    #And check more outcomes
+  	Given init config
+    When  add number
+    Then validate result 
 
+    
+    

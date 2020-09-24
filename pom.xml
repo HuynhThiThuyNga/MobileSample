@@ -7,41 +7,156 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+		<!-- <dependency> <groupId>org.seleniumhq.selenium</groupId> <artifactId>selenium-java</artifactId> 
+			<version>3.141.5</version> </dependency> <dependency> <groupId>io.appium</groupId> 
+			<artifactId>java-client</artifactId> <version>7.3.0</version> </dependency> 
+			<dependency> <groupId>io.cucumber</groupId> <artifactId>cucumber-core</artifactId> 
+			<version>6.7.0</version> </dependency> <dependency> <groupId>info.cukes</groupId> 
+			<artifactId>cucumber-jvm</artifactId> <version>1.2.2</version> <type>pom</type> 
+			</dependency> <dependency> <groupId>info.cukes</groupId> <artifactId>cucumber-java</artifactId> 
+			<version>1.2.2</version> </dependency> <dependency> <groupId>info.cukes</groupId> 
+			<artifactId>cucumber-core</artifactId> <version>1.2.2</version> </dependency> 
+			<dependency> <groupId>info.cukes</groupId> <artifactId>cucumber-junit</artifactId> 
+			<version>1.2.2</version> </dependency> <dependency> <groupId>info.cukes</groupId> 
+			<artifactId>cucumber-jvm-deps</artifactId> <version>1.0.3</version> </dependency> 
+			<dependency> <groupId>junit</groupId> <artifactId>junit</artifactId> <version>4.11</version> 
+			</dependency> -->
+
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-java</artifactId>
-			<version>3.141.5</version>
+			<artifactId>selenium-server</artifactId>
+			<version>3.14.0</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.13</version>
-		</dependency>
-
-		<dependency>
-			<groupId>io.cucumber</groupId>
-			<artifactId>cucumber-java</artifactId>
-			<version>6.7.0</version>
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>io.cucumber</groupId>
-			<artifactId>cucumber-junit</artifactId>
-			<version>6.1.1</version>
-			<scope>test</scope>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/io.appium/java-client -->
 		<dependency>
 			<groupId>io.appium</groupId>
 			<artifactId>java-client</artifactId>
 			<version>7.3.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>1.2.6</version>
+			<type>pom</type>
+		</dependency>
 
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-junit</artifactId>
+			<version>1.2.6</version>
+		</dependency>
+
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-picocontainer</artifactId>
+			<version>1.2.6</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.masterthought</groupId>
+			<artifactId>cucumber-reporting</artifactId>
+			<version>5.3.1</version>
+		</dependency>
 	</dependencies>
+	
+	<properties>
+		<!-- Main Config -->
+		<java.version>1.8</java.version>
+		<encoding>UTF-8</encoding>
+		<testng.version>6.14.3</testng.version>
+		<reportng.version>1.1.4</reportng.version>
+		<mozium.version>1.4.2</mozium.version>
+		<!--plugins versions -->
+		<exec-maven-plugin.version>1.2.1</exec-maven-plugin.version>
+		<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+		<maven-release-plugin.version>2.2.2</maven-release-plugin.version>
+		<lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
+		<maven-source-plugin.version>2.2.1</maven-source-plugin.version>
+		<maven-javadoc-plugin.version>2.10.3</maven-javadoc-plugin.version>
+		<maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
+		<sikuli.version>1.1.2</sikuli.version>
+	</properties>
+
+	<build>
+		<plugins>
+
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${maven-source-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven-surefire-plugin.version}</version>
+				<configuration>
+					<properties>
+						<reportsDirectory>target/</reportsDirectory>
+						<workingDirectory>target/</workingDirectory>
+						<property>
+							<name>outputDirectory</name>
+							<value>target/</value>
+						</property>
+					</properties>
+					<testFailureIgnore>true</testFailureIgnore>
+					<skipTests>${skipTests}</skipTests>
+					<properties>
+						<property>
+							<name>junit</name>
+							<value>true</value>
+						</property>
+					</properties>
+					<includes>
+						<include>**/MobileTestRunner.java</include>
+					</includes>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.surefire</groupId>
+						<artifactId>surefire-junit4</artifactId>
+						<version>${maven-surefire-plugin.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>net.masterthought</groupId>
+				<artifactId>maven-cucumber-reporting</artifactId>
+				<version>3.11.0</version>
+				<executions>
+					<execution>
+						<id>execution</id>
+						<phase>${phase}</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<projectName>${project.name}</projectName>
+							<outputDirectory>${project.build.directory}/site/cucumber-reports</outputDirectory>
+							<cucumberOutput>${project.build.directory}/cucumber.json</cucumberOutput>
+							<enableFlashCharts>true</enableFlashCharts>
+							<skippedFails>true</skippedFails>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>
